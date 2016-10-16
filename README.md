@@ -26,9 +26,9 @@ Pokémon Map Service which collects real-time info of Pokémon, Stops, and Gyms 
       
 # Set up pgoapi
   1. pgoapi uses mock_pgoapi as default. If you want to connect to Pokemon's real server instead, please do followings:
-      a. $ vi pgoapi/pokecli.py
-      b. comment line 40: from mock_pgoapi import mock_pgoapi as pgoapi
-      c. enable line 41: from pgoapi import pgoapi
+    1. $ vi pgoapi/pokecli.py
+    2. comment line 40: from mock_pgoapi import mock_pgoapi as pgoapi
+    3. enable line 41: from pgoapi import pgoapi
       
 # Refresh Tor Proxy
   1. $ sudo service tor restart
