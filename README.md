@@ -17,6 +17,7 @@ Pokémon Map Service which collects real-time info of Pokémon, Stops, and Gyms 
   1. essential tool<br />
       $ sudo apt-get install python-setuptools python-pip build-essential python-dev -y
   2. pip libs<br />
+      (may need to install requests individually) $ sudo pip install requests <br />
       $ cd pgpapi -> $ sudo pip install -I -r requirements.txt --force-reinstall 
   3. tor proxy<br />
       $ sudo apt-get install tor -y<br />
