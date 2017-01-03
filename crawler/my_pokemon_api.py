@@ -14,10 +14,12 @@ from s2sphere import CellId, math
 
 log = logging.getLogger(__name__)
 
+# break rectangle area into small level 15 cells and forward to pgoapi
 def break_down_area_to_cell(north, south, west, east):
     # Return a list of s2 cell id
     result = []
 
+    # eample from google s2 document
     region = s2sphere.RegionCoverer()
     region.min_level = 15
     region.max_cells = 15
@@ -25,13 +27,17 @@ def break_down_area_to_cell(north, south, west, east):
     p2 = s2sphere.LatLng.from_degrees(south, east)
 
     cell_ids = region.get_covering(s2sphere.LatLngRect.from_point_pair(p1, p2))
+
+    #pgoapi requires the cellid is a string for processing
     result += [ cell_id.id() for cell_id in cell_ids ]
     return result
 
+#change cell id to CellId Object(which has latitute and longtitute), return 1 tuple
 def get_position_from_cell_id(cellid):
     cell = CellId(id_ = cellid).to_lat_lng()
     return (math.degrees(cell._LatLng__coords[0]), math.degrees(cell._LatLng__coords[1]), 0)
 
+#call pgoapi to search a cell id
 def search_point(cell_id, api):
 
     # parse position
@@ -60,6 +66,7 @@ def parse_pokemon(search_response):
             catchable_pokemons += map_cell["catchable_pokemons"]
     return catchable_pokemons
 
+#enter lefttop point and rightbottom point, to scan the pokemons info in this area
 def scan_area(north, south, west, east, api):
 
     result = []
@@ -142,5 +149,5 @@ if __name__ == "__main__":
 
     # Point 1: 40.7565138, -74.0003176
     # Point 2: 40.7473342, -73.997958
-    print scan_area(40.7565138, 40.7473342, -74.0003176, -73.997958, api)
+    print json.dumps(scan_area(40.7565138, 40.7473342, -74.0003176, -73.997958, api), indent = 2)
 
